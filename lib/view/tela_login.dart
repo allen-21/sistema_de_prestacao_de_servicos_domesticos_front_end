@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'tela_cadastro.dart';
+
+
 class TelaLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,8 +69,12 @@ class TelaLogin extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextButton(
-                onPressed: () {
-                  // Adicione a navegação para a tela de registro aqui
+                 onPressed: () {
+                  // Navegue para a tela de registro
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TelaCadastro()),
+                  );
                 },
                 child: Text(
                   'Ainda não tem uma conta? Registre-se',
