@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 
-class TelaCadastroProfissional extends StatelessWidget {
+class TelaCadastroProfissional extends StatefulWidget {
+  @override
+  _TelaCadastroProfissionalState createState() =>
+      _TelaCadastroProfissionalState();
+}
+
+class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
+  String? _selectedLocation = null;
+
+  final List<String> locations = [
+    'Maputo Cidade',
+    'Maputo Província',
+  ];
+
+  final Map<String, List<String>> districts = {
+    'Maputo Cidade': ['KaMpfumo', 'KaMaxaquene', 'KaMavota', 'KaMubukwana'],
+    'Maputo Província': ['Manhiça', 'Matola', 'Boane', 'Namaacha'],
+  };
+
+  String? _selectedDistrict = null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,6 +33,13 @@ class TelaCadastroProfissional extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Nome de Usuário',
+                  prefixIcon: Icon(Icons.person),
+                ),
+              ),
+              SizedBox(height: 20),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Nome Completo',
@@ -45,23 +72,49 @@ class TelaCadastroProfissional extends StatelessWidget {
               SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
+                  labelText: 'Localização',
+                  prefixIcon: Icon(Icons.location_on),
+                ),
+                value: _selectedLocation,
+                items: locations.map((String location) {
+                  return DropdownMenuItem<String>(
+                    value: location,
+                    child: Text(location),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedLocation = newValue;
+                    _selectedDistrict = null;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              if (_selectedLocation != null)
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Distrito',
+                    prefixIcon: Icon(Icons.location_city),
+                  ),
+                  value: _selectedDistrict,
+                  items: districts[_selectedLocation!]!.map((String district) {
+                    return DropdownMenuItem<String>(
+                      value: district,
+                      child: Text(district),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedDistrict = newValue;
+                    });
+                  },
+                ),
+              SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: 'Área de Atuação',
                   prefixIcon: Icon(Icons.work),
                 ),
-                items: <String>[
-                  'Limpeza',
-                  'Jardinagem',
-                  'Encanamento',
-                  'Eletricidade',
-                  'Reparos Gerais',
-                  'Outro',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {},
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -70,13 +123,6 @@ class TelaCadastroProfissional extends StatelessWidget {
                   prefixIcon: Icon(Icons.work),
                 ),
                 maxLines: 3,
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Certificações',
-                  prefixIcon: Icon(Icons.badge),
-                ),
               ),
               SizedBox(height: 20),
               TextFormField(
