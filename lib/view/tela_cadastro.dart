@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'tela_cadastro_cliente.dart';
+import 'tela_cadastro_profissional.dart';
+
 
 class TelaCadastro extends StatelessWidget {
   @override
@@ -70,6 +71,10 @@ class TelaCadastro extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // Navegue para o formulário de cadastro de profissional
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TelaCadastroProfissional()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
