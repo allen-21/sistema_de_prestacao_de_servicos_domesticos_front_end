@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'tela_cadastro.dart';
+import 'tela_inicial_cliente.dart';
 
 
 class TelaLogin extends StatelessWidget {
@@ -52,7 +52,10 @@ class TelaLogin extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Adicione a lógica de login aqui
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TelaInicialCliente ()),
+                    );
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.green[700]),

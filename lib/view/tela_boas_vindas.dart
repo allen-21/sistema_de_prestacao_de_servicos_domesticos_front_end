@@ -61,4 +61,3 @@ class TelaBoasVindas extends StatelessWidget {
     );
   }
 }
-
