@@ -1,0 +1,264 @@
+import 'package:flutter/material.dart';
+
+class TelaInicialAdmin extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Painel de Controle'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.teal,
+              ),
+              child: Text(
+                'Menu Administrativo',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.people),
+              title: Text('Gerenciamento de Usuários'),
+              onTap: () {
+                // Lógica para navegar para a seção de gerenciamento de usuários
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text('Gerenciamento de Profissionais'),
+              onTap: () {
+                // Lógica para navegar para a seção de gerenciamento de profissionais
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.analytics),
+              title: Text('Relatórios e Análises'),
+              onTap: () {
+                // Lógica para navegar para a seção de relatórios e análises
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Gerenciamento de Serviços'),
+              onTap: () {
+                // Lógica para navegar para a seção de gerenciamento de serviços
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text('Suporte e Ajuda'),
+              onTap: () {
+                // Lógica para navegar para a seção de suporte e ajuda
+              },
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  _buildCard(
+                    Colors.blue,
+                    Icons.people,
+                    'Novos Clientes',
+                    '5',
+                  ),
+                  _buildCard(
+                    Colors.orange,
+                    Icons.schedule,
+                    'Serviços Agendados',
+                    '15',
+                  ),
+                  _buildCard(
+                    Colors.green,
+                    Icons.done_all,
+                    'Serviços Concluídos',
+                    '30',
+                  ),
+                  _buildCard(
+                    Colors.purple,
+                    Icons.star,
+                    'Avaliação Média',
+                    '4.8',
+                  ),
+                  _buildCard(
+                    Colors.red,
+                    Icons.warning,
+                    'Problemas Pendentes',
+                    '2',
+                  ),
+                  _buildCard(
+                    Colors.teal,
+                    Icons.info,
+                    'Notificações',
+                    '3',
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Resumo Diário',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal,
+                        ),
+                      ),
+                      DropdownButton<String>(
+                        items: <String>['Dia', 'Semana', 'Mês', 'Ano']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          // Lógica para atualizar o resumo diário com base no filtro selecionado
+                        },
+                        hint: Text('Filtrar'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Card(
+                    elevation: 5,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.calendar_today),
+                          title: Text(
+                            'Data: 10/05/2024',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text(
+                            'Novos Clientes: 5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.schedule),
+                          title: Text(
+                            'Serviços Agendados: 15',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.done_all),
+                          title: Text(
+                            'Serviços Concluídos: 30',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.star),
+                          title: Text(
+                            'Avaliação Média: 4.8',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.warning),
+                          title: Text(
+                            'Problemas Pendentes: 2',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.info),
+                          title: Text(
+                            'Notificações: 3',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(Color color, IconData icon, String title, String value) {
+    return Card(
+      elevation: 5,
+      color: color,
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 50,
+              color: Colors.white,
+            ),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
