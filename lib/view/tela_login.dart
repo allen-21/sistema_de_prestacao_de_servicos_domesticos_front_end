@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/tela_inicial_admin';
 import 'tela_cadastro.dart';
-import 'tela_inicial_cliente.dart';
+//import 'tela_inicial_cliente.dart';
+//import 'tela_inicial_profissional';
 
 
 class TelaLogin extends StatelessWidget {
@@ -54,7 +56,9 @@ class TelaLogin extends StatelessWidget {
                 onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TelaInicialCliente ()),
+                      //MaterialPageRoute(builder: (context) => TelaInicialCliente ()),
+                      //MaterialPageRoute(builder: (context) => TelaInicialProfissional ()),
+                      MaterialPageRoute(builder: (context) => TelaInicialAdmin ()),
                     );
                 },
                 style: ButtonStyle(

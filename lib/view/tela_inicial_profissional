@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TelaInicialCliente extends StatelessWidget {
+class TelaInicialProfissional extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +14,9 @@ class TelaInicialCliente extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: Icon(Icons.person), // Alteração do ícone para o perfil do usuário
+            icon: Icon(Icons.person), // Alteração do ícone para o perfil do profissional
             onPressed: () {
-              // Lógica para navegar para o perfil do usuário
+              // Lógica para navegar para o perfil do profissional
             },
           ),
         ],
@@ -29,7 +29,7 @@ class TelaInicialCliente extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               color: Colors.teal,
               child: Text(
-                'Encontrar Profissionais',
+                'Oferecer Serviços',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class TelaInicialCliente extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               color: Colors.teal,
               child: Text(
-                'Profissionais em Destaque',
+                'Serviços Pendentes',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class TelaInicialCliente extends StatelessWidget {
             SizedBox(height: 20),
             GestureDetector(
               onHorizontalDragUpdate: (details) {
-                // Lógica para rolar os profissionais em destaque
+                // Lógica para rolar os serviços pendentes
               },
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -128,20 +128,20 @@ class TelaInicialCliente extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Icon(
-                                  Icons.person,
+                                  Icons.work,
                                   size: 60,
                                 ),
                               ),
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Nome do Profissional $index',
+                              'Nome do Serviço $index',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text('Serviço Oferecido'),
-                            Text('Avaliação: 4.5'),
+                            Text('Cliente: Nome do Cliente'),
+                            Text('Data: 01/01/2024'),
                           ],
                         ),
                       ),
@@ -161,16 +161,16 @@ class TelaInicialCliente extends StatelessWidget {
             label: 'Início',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people), // Alteração do ícone para profissionais
-            label: 'Profissionais',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket), // Alteração do ícone para o carrinho
-            label: 'Serviços Solicitados',
+            icon: Icon(Icons.shopping_basket), // Alteração do ícone para pedidos
+            label: 'Pedidos',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat), // Alteração do ícone para o chat
             label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings), // Alteração do ícone para configurações
+            label: 'Configurações',
           ),
         ],
         selectedItemColor: Colors.teal,
