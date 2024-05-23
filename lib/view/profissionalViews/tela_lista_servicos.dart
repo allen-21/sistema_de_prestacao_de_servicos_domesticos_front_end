@@ -15,8 +15,12 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
   TextEditingController _serviceDescriptionController = TextEditingController();
   List<String> _services = [];
 
-  String addServiceUrl = "http://192.168.39.91:8080/servicos/adicionar";
-  String listServiceUrl = "http://192.168.39.91:8080/servicos/meus";
+ // String addServiceUrl = "http://192.168.39.91:8080/servicos/adicionar";
+  //String listServiceUrl = "http://192.168.39.91:8080/servicos/meus";
+
+    String addServiceUrl = "http://172.24.0.229:8080/servicos/adicionar";
+  String listServiceUrl = "http://172.24.0.229:8080/servicos/meus";
+  
 
   @override
   void initState() {

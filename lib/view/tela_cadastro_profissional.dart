@@ -27,7 +27,9 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
     profissoes: Profissoes.LIMPEZA,
     especialidades: '',
   );
-  String url = "http://192.168.39.91:8080/profissional/criar";
+ // String url = "http://192.168.39.91:8080/profissional/criar";
+  String url = "http://172.24.0.229:8080/profissional/criar";
+  
   String? errorMessage;
 
   Future<void> save() async {

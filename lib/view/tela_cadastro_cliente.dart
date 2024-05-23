@@ -18,7 +18,9 @@ class TelaCadastroCliente extends StatefulWidget {
 class _TelaCadastroClienteState extends State<TelaCadastroCliente> {
   final _formKey = GlobalKey<FormState>();
   Cliente cliente = Cliente(nome: '', telefone: '', endereco: '', username: '', password: '');
-  String url = "http://192.168.39.91:8080/cliente/criar";
+ // String url = "http://192.168.39.91:8080/cliente/criar";
+   String url = "http://172.24.0.229:8080/cliente/criar";
+  
   String? errorMessage;
 
 

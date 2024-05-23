@@ -19,8 +19,11 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
 
-  String loginUrl = "http://192.168.39.91:8080/auth/login";
-  String userInfoUrl = "http://192.168.39.91:8080/auth/user";
+  //String loginUrl = "http://192.168.39.91:8080/auth/login";
+  //String userInfoUrl = "http://192.168.39.91:8080/auth/user";
+    String loginUrl = "http://172.24.0.229:8080/auth/login";
+  String userInfoUrl = "http://172.24.0.229:8080/auth/user";
+
 
   Future<void> save() async {
     try {
