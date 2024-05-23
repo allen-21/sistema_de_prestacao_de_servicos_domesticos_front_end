@@ -7,8 +7,8 @@ class TelaBoasVindas extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(20.0),
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           child: Column(
@@ -16,12 +16,12 @@ class TelaBoasVindas extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'assets/logo.png',
+                'assets/logo.png', 
                 width: 150,
                 height: 150,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Encontre Serviços Domésticos com Facilidade!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -29,27 +29,27 @@ class TelaBoasVindas extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   // Navegue para a tela de login
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TelaLogin()),
+                    MaterialPageRoute(builder: (context) => const Login()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[300], // Cor do botão
-                  elevation: 3, // Altura da sombra    
+                  backgroundColor: Colors.teal[300], 
+                  elevation: 3, 
                 ),
                 
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   child: Text(
                     'Iniciar',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white, // Cor do texto no botão
+                      color: Colors.white, 
                     ),
                   ),
                 ),
@@ -61,4 +61,3 @@ class TelaBoasVindas extends StatelessWidget {
     );
   }
 }
-
