@@ -15,4 +15,21 @@ class Cliente extends UserModel {
             username: username,
             password: password,
             role: UserRole.CLIENTE);
+
+  factory Cliente.fromJson(Map<String, dynamic> json) {
+    return Cliente(
+      nome: json['nome'],
+      telefone: json['telefone'],
+      endereco: json['endereco'],
+      username: json['username'],
+      password: json['password'],
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final data = super.toJson();
+    data['role'] = 'CLIENTE'; // Override role to ensure it is always CLIENTE
+    return data;
+  }
 }

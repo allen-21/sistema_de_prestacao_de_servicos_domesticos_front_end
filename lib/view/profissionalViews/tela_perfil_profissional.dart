@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
 import 'dart:convert';
 
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_alterar_perfil.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_atualizar_profissional.dart';
 
 
 
@@ -53,8 +53,8 @@ class _ProfileScreenState extends State<PerfilProfissional> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     fetchUserDetails();
   }
 

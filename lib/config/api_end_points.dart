@@ -16,15 +16,16 @@ class ApiEndpoints {
 
   }
   static String deleteProfissionalById(int id) {
-    return "${ConfigHost.baseUrl}/profissional/excluir/" + id.toString();
+    return "${ConfigHost.baseUrl}/profissional/excluir/$id";
   }
 
   //Cliente
   static String userRegisterCliente = "${ConfigHost.baseUrl}/cliente/criar";
   static String userUpdateCliente = "${ConfigHost.baseUrl}/cliente/atualizar";
+  static String userDetalheCliente = "${ConfigHost.baseUrl}/cliente/detalhes";
 
   static String deleteClienteById(int id) {
-    return "${ConfigHost.baseUrl}/cliente/excluir/" + id.toString();
+    return "${ConfigHost.baseUrl}/cliente/excluir/$id";
   }
 
   //Servicos
@@ -34,10 +35,10 @@ class ApiEndpoints {
   static String serviceAvaliacoes = "${ConfigHost.baseUrl}/servicos/avaliacoes";
 
   static String deleteServiceById(int id) {
-    return "${ConfigHost.baseUrl}/servicos/excluir/" + id.toString();
+    return "${ConfigHost.baseUrl}/servicos/excluir/$id";
   }
    static String listarServiceByIdProfissional(int id) {
-    return "${ConfigHost.baseUrl}/servicos/lista/" + id.toString();
+    return "${ConfigHost.baseUrl}/servicos/lista/$id";
   }
 
 //Pedidos 
@@ -46,10 +47,10 @@ class ApiEndpoints {
  static String pedidoListarCliente = "${ConfigHost.baseUrl}/pedidos/cliente";
 
 static String pedidoAtualizarEstado(int id) {
-    return "${ConfigHost.baseUrl}/pedidos/status/" + id.toString();
+    return "${ConfigHost.baseUrl}/pedidos/status/$id";
   } 
 
   static String pedidoAvaliacaoPedido(int id) {
-    return "${ConfigHost.baseUrl}/pedidos/avaliacao/" + id.toString();
+    return "${ConfigHost.baseUrl}/pedidos/avaliacao/$id";
   } 
 }

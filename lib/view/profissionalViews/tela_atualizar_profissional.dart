@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/profissoes.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/profissional_model.dart';
 
 class UpdateProfissionalScreen extends StatefulWidget {
   final String token;
