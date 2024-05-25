@@ -1,100 +1,105 @@
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/clientemodel.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/tela_login.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/profissoes.dart';
+import 'dart:convert';
+
+import 'package:sistema_de_prestacao_de_servicos_domesticos/models/profissional_model.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_login.dart';
 
 
+class TelaCadastroProfissional extends StatefulWidget {
+  const TelaCadastroProfissional({super.key});
 
-class TelaCadastroCliente extends StatefulWidget {
-  const TelaCadastroCliente({super.key});
-
- 
 
   @override
-  _TelaCadastroClienteState createState() => _TelaCadastroClienteState();
+  _TelaCadastroProfissionalState createState() => _TelaCadastroProfissionalState();
 }
 
-class _TelaCadastroClienteState extends State<TelaCadastroCliente> {
+class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
   final _formKey = GlobalKey<FormState>();
-  Cliente cliente = Cliente(nome: '', telefone: '', endereco: '', username: '', password: '');
- // String url = "http://192.168.39.91:8080/cliente/criar";
-   String url = "http://172.24.0.229:8080/cliente/criar";
-  
+  Profissional profissional = Profissional(
+    nome: '',
+    telefone: '',
+    endereco: '',
+    username: '',
+    password: '',
+    profissoes: Profissoes.LIMPEZA,
+    especialidades: '',
+  );
   String? errorMessage;
 
+  Future<void> save() async {
+    if (_formKey.currentState!.validate()) {
+      var profissionalJson = json.encode({
+        'nome': profissional.nome,
+        'telefone': profissional.telefone,
+        'endereco': profissional.endereco,
+        'username': profissional.username,
+        'password': profissional.password,
+        'profissoes': profissional.profissoes.toString().split('.').last,
+        'especialidades': profissional.especialidades,
+        'disponibilidade': profissional.disponibilidade,
+      });
 
-Future<void> save() async {
-  if (_formKey.currentState!.validate()) {
-    var clienteJson = json.encode({
-      'nome': cliente.nome,
-      'telefone': cliente.telefone,
-      'endereco': cliente.endereco,
-      'username': cliente.username,
-      'password': cliente.password,
-    });
-
-    var res = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: clienteJson,
-    );
-
-    if (res.statusCode == 201) {
-      // Registro bem-sucedido, redireciona para a tela de login
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Sucesso'),
-            content: const Text('Registro bem-sucedido'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
+      var res = await http.post(
+        Uri.parse(ApiEndpoints.userRegisterProfissional),
+        headers: {'Content-Type': 'application/json'},
+        body: profissionalJson,
       );
-    } else if (res.statusCode == 400) {
-      // Erro de validação
-      var errorMessage = res.body;
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Erro de validação'),
-            content: Text(errorMessage),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Outro tipo de erro
-      print('Erro ao registrar: ${res.body}');
+
+      if (res.statusCode == 201) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Sucesso'),
+              content: Text('Registro bem-sucedido'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else if (res.statusCode == 400) {
+        var errorMessage = res.body;
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Erro de validação'),
+              content: Text(errorMessage),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        print('Erro ao registrar: ${res.body}');
+      }
     }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Cliente'),
+        title: const Text('Cadastro de Profissional'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -116,13 +121,15 @@ Future<void> save() async {
                     return null;
                   },
                   onChanged: (val) {
-                    cliente.nome = val;
+                    setState(() {
+                      profissional.nome = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Endereco',
+                    labelText: 'Endereço',
                     prefixIcon: Icon(Icons.home),
                   ),
                   validator: (value) {
@@ -132,7 +139,9 @@ Future<void> save() async {
                     return null;
                   },
                   onChanged: (val) {
-                    cliente.endereco = val;
+                    setState(() {
+                      profissional.endereco = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
@@ -149,7 +158,9 @@ Future<void> save() async {
                     return null;
                   },
                   onChanged: (val) {
-                    cliente.telefone = val;
+                    setState(() {
+                      profissional.telefone = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
@@ -165,7 +176,9 @@ Future<void> save() async {
                     return null;
                   },
                   onChanged: (val) {
-                    cliente.username = val;
+                    setState(() {
+                      profissional.username = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
@@ -182,7 +195,46 @@ Future<void> save() async {
                     return null;
                   },
                   onChanged: (val) {
-                    cliente.password = val;
+                    setState(() {
+                      profissional.password = val;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField<Profissoes>(
+                  value: profissional.profissoes,
+                  onChanged: (value) {
+                    setState(() {
+                      profissional.profissoes = value!;
+                    });
+                  },
+                  items: Profissoes.values.map((Profissoes profissao) {
+                    return DropdownMenuItem<Profissoes>(
+                      value: profissao,
+                      child: Text(profissao.toString().split('.').last),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    labelText: 'Profissão',
+                    prefixIcon: Icon(Icons.work),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Especialidades',
+                    prefixIcon: Icon(Icons.work),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                  onChanged: (val) {
+                    setState(() {
+                      profissional.especialidades = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
@@ -217,7 +269,6 @@ Future<void> save() async {
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    // Adicione a lógica para abrir os Termos de Serviço
                   },
                   child: const Text(
                     'Termos de Serviço',
@@ -229,7 +280,6 @@ Future<void> save() async {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Adicione a lógica para abrir a Política de Privacidade
                   },
                   child: const Text(
                     'Política de Privacidade',

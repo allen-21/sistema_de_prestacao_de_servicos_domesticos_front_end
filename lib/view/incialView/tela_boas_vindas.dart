@@ -32,7 +32,7 @@ class TelaBoasVindas extends StatelessWidget {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  // Navegue para a tela de login
+                 
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Login()),

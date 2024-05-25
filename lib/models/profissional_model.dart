@@ -1,13 +1,12 @@
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/profissoes.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/user_role.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/servico_model.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/user_model.dart';
 
 class Profissional extends UserModel {
   Profissoes profissoes;
   String especialidades;
   bool disponibilidade;
-  List<Servico> servicos = [];
+
 
   Profissional({
     String? nome,
@@ -26,4 +25,17 @@ class Profissional extends UserModel {
           password: password,
           role: UserRole.PROFISSIONAL,
         );
+
+  factory Profissional.fromJson(Map<String, dynamic> json) {
+    return Profissional(
+      nome: json['nome'],
+      telefone: json['telefone'],
+      endereco: json['endereco'],
+      username: json['username'],
+      password: json['password'],
+      profissoes: ProfissoesExtension.fromString(json['profissoes']),
+      especialidades: json['especialidades'],
+      disponibilidade: json['disponibilidade'],
+    );
+  }
 }

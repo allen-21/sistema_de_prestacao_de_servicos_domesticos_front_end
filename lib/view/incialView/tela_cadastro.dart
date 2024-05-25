@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'tela_cadastro_cliente.dart';
-import 'tela_cadastro_profissional.dart';
+import '../clienteViews/tela_cadastro_cliente.dart';
+import '../profissionalViews/tela_cadastro_profissional.dart';
 
 
 class TelaCadastro extends StatelessWidget {
@@ -38,7 +38,7 @@ class TelaCadastro extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
               onPressed: () {
-                    // Navegue para o formulário de cadastro de cliente
+                    
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => TelaCadastroCliente()),

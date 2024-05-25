@@ -20,7 +20,7 @@ class _ProfissionalMenuState extends State<ProfissionalMenu> {
   void initState() {
     super.initState();
     _screens = [
-      PerfilProfissional(),
+      PerfilProfissional(token: widget.token),
       ListaPedidos(),
       AddAndListServicesScreen(token: widget.token),
       TelaConversa(),

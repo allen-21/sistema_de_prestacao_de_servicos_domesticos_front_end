@@ -30,14 +30,9 @@ class TelaDetalhesPedido extends StatelessWidget {
             SizedBox(height: 10.0),
             Text("- Canalizacao"),
             Text("- Reparacao de Torneiras"),
-            // OrderItem(name: 'Produto 1', quantity: 2, price: 50.0),
-            // OrderItem(name: 'Produto 2', quantity: 1, price: 30.0),
+    
             SizedBox(height: 10.0),
-            // Text(
-            //   'Total: \$130.00',
-            //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            // ),
-            // SizedBox(height: 20.0),
+
             Text(
               'Estado do Pedido:',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -48,11 +43,9 @@ class TelaDetalhesPedido extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  // style: ButtonStyle(backgroundColor: Colors.tealAccent),
+               
                   onPressed: null,
-                  // onPressed: () {
-                  //   return 0; //jjbsak
-                  // },
+   
                   child: Text(
                     'Aceitar',
                     style: TextStyle(
@@ -70,10 +63,7 @@ class TelaDetalhesPedido extends StatelessWidget {
                 ),
               ],
             ),
-            // Text(
-            //   'Entregue',
-            //   style: TextStyle(fontSize: 16.0),
-            // ),
+
           ],
         ),
       ),

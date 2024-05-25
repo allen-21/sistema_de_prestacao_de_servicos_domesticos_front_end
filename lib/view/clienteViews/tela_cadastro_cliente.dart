@@ -1,107 +1,98 @@
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/profissoes.dart';
-import 'dart:convert';
-
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/profissional_model.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/tela_login.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/models/clientemodel.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_login.dart';
 
 
-class TelaCadastroProfissional extends StatefulWidget {
-  const TelaCadastroProfissional({super.key});
 
+class TelaCadastroCliente extends StatefulWidget {
+  const TelaCadastroCliente({super.key});
+
+ 
 
   @override
-  _TelaCadastroProfissionalState createState() => _TelaCadastroProfissionalState();
+  _TelaCadastroClienteState createState() => _TelaCadastroClienteState();
 }
 
-class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
+class _TelaCadastroClienteState extends State<TelaCadastroCliente> {
   final _formKey = GlobalKey<FormState>();
-  Profissional profissional = Profissional(
-    nome: '',
-    telefone: '',
-    endereco: '',
-    username: '',
-    password: '',
-    profissoes: Profissoes.LIMPEZA,
-    especialidades: '',
-  );
- // String url = "http://192.168.39.91:8080/profissional/criar";
-  String url = "http://172.24.0.229:8080/profissional/criar";
-  
+  Cliente cliente = Cliente(nome: '', telefone: '', endereco: '', username: '', password: '');  
   String? errorMessage;
 
-  Future<void> save() async {
-    if (_formKey.currentState!.validate()) {
-      var profissionalJson = json.encode({
-        'nome': profissional.nome,
-        'telefone': profissional.telefone,
-        'endereco': profissional.endereco,
-        'username': profissional.username,
-        'password': profissional.password,
-        'profissoes': profissional.profissoes.toString().split('.').last,
-        'especialidades': profissional.especialidades,
-        'disponibilidade': profissional.disponibilidade,
-      });
 
-      var res = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: profissionalJson,
+Future<void> save() async {
+  if (_formKey.currentState!.validate()) {
+    var clienteJson = json.encode({
+      'nome': cliente.nome,
+      'telefone': cliente.telefone,
+      'endereco': cliente.endereco,
+      'username': cliente.username,
+      'password': cliente.password,
+    });
+
+    var res = await http.post(
+      Uri.parse(ApiEndpoints.userRegisterCliente),
+      headers: {'Content-Type': 'application/json'},
+      body: clienteJson,
+    );
+
+    if (res.statusCode == 201) {
+      
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Sucesso'),
+            content: const Text('Registro bem-sucedido'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Login()),
+                  );
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
       );
+    } else if (res.statusCode == 400) {
 
-      if (res.statusCode == 201) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Sucesso'),
-              content: Text('Registro bem-sucedido'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else if (res.statusCode == 400) {
-        var errorMessage = res.body;
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Erro de validação'),
-              content: Text(errorMessage),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        print('Erro ao registrar: ${res.body}');
-      }
+      var errorMessage = res.body;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Erro de validação'),
+            content: Text(errorMessage),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+   
+      print('Erro ao registrar: ${res.body}');
     }
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Profissional'),
+        title: const Text('Cadastro de Cliente'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -123,15 +114,13 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                     return null;
                   },
                   onChanged: (val) {
-                    setState(() {
-                      profissional.nome = val;
-                    });
+                    cliente.nome = val;
                   },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Endereço',
+                    labelText: 'Endereco',
                     prefixIcon: Icon(Icons.home),
                   ),
                   validator: (value) {
@@ -141,9 +130,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                     return null;
                   },
                   onChanged: (val) {
-                    setState(() {
-                      profissional.endereco = val;
-                    });
+                    cliente.endereco = val;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -160,9 +147,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                     return null;
                   },
                   onChanged: (val) {
-                    setState(() {
-                      profissional.telefone = val;
-                    });
+                    cliente.telefone = val;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -178,9 +163,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                     return null;
                   },
                   onChanged: (val) {
-                    setState(() {
-                      profissional.username = val;
-                    });
+                    cliente.username = val;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -197,46 +180,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                     return null;
                   },
                   onChanged: (val) {
-                    setState(() {
-                      profissional.password = val;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-                DropdownButtonFormField<Profissoes>(
-                  value: profissional.profissoes,
-                  onChanged: (value) {
-                    setState(() {
-                      profissional.profissoes = value!;
-                    });
-                  },
-                  items: Profissoes.values.map((Profissoes profissao) {
-                    return DropdownMenuItem<Profissoes>(
-                      value: profissao,
-                      child: Text(profissao.toString().split('.').last),
-                    );
-                  }).toList(),
-                  decoration: const InputDecoration(
-                    labelText: 'Profissão',
-                    prefixIcon: Icon(Icons.work),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Especialidades',
-                    prefixIcon: Icon(Icons.work),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Campo obrigatório';
-                    }
-                    return null;
-                  },
-                  onChanged: (val) {
-                    setState(() {
-                      profissional.especialidades = val;
-                    });
+                    cliente.password = val;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -271,6 +215,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
+                   
                   },
                   child: const Text(
                     'Termos de Serviço',
@@ -282,6 +227,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                 ),
                 TextButton(
                   onPressed: () {
+                   
                   },
                   child: const Text(
                     'Política de Privacidade',

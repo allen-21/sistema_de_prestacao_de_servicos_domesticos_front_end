@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'view/tela_boas_vindas.dart';
+import 'view/incialView/tela_boas_vindas.dart';
 
 void main() {
   runApp(MaterialApp(

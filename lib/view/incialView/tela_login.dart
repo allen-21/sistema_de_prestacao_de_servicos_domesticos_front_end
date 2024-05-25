@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
 import 'dart:convert';
 
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/user.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/adminviews/admin_view.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/cliente_view.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_inicial_profissional.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/tela_cadastro.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_cadastro.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,16 +20,10 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
 
-  //String loginUrl = "http://192.168.39.91:8080/auth/login";
-  //String userInfoUrl = "http://192.168.39.91:8080/auth/user";
-    String loginUrl = "http://172.24.0.229:8080/auth/login";
-  String userInfoUrl = "http://172.24.0.229:8080/auth/user";
-
-
   Future<void> save() async {
     try {
       var res = await http.post(
-        Uri.parse(loginUrl),
+        Uri.parse(ApiEndpoints.loginUrl),
         headers: {'Content-Type': 'application/json'},
         body:
             json.encode({'username': user.username, 'password': user.password}),
@@ -37,16 +32,16 @@ class _LoginState extends State<Login> {
       if (res.statusCode == 200) {
         var token = json.decode(res.body)['token'];
 
-        // Usar o token para fazer uma chamada para obter as informações do usuário
+      
         var userInfoRes = await http.get(
-          Uri.parse(userInfoUrl),
+          Uri.parse(ApiEndpoints.userInfoRoleUrl),
           headers: {'Authorization': 'Bearer $token'},
         );
 
         if (userInfoRes.statusCode == 200) {
           var role = json.decode(userInfoRes.body)['role'];
 
-          // Redirecionar para a página apropriada com base na role
+         
           switch (role) {
             case 'ROLE_ADMIN':
               Navigator.push(
@@ -76,7 +71,7 @@ class _LoginState extends State<Login> {
               break;
           }
         } else {
-          // Lidar com erro na resposta da chamada para obter informações do usuário
+          
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -115,7 +110,7 @@ class _LoginState extends State<Login> {
         );
       }
     } catch (error) {
-      // Lidar com erro na chamada HTTP
+     
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -146,7 +141,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 10, 71, 90), // Cor principal do Instagram
+      backgroundColor: Color.fromARGB(255, 10, 71, 90), 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
@@ -157,17 +152,17 @@ class _LoginState extends State<Login> {
               style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255)), // Cor do texto ajustada para branco
+                  color: Color.fromARGB(255, 255, 255, 255)), 
             ),
             const SizedBox(height: 20),
             TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Usuário',
                 prefixIcon: Icon(Icons.person,
-                    color: Colors.white), // Cor do ícone ajustada para branco
+                    color: Colors.white), 
               ),
               style: TextStyle(
-                  color: Colors.white), // Cor do texto ajustada para branco
+                  color: Colors.white), 
               onChanged: (val) {
                 user.username = val;
               },
@@ -178,10 +173,10 @@ class _LoginState extends State<Login> {
               decoration: const InputDecoration(
                 hintText: 'Senha',
                 prefixIcon: Icon(Icons.lock,
-                    color: Colors.white), // Cor do ícone ajustada para branco
+                    color: Colors.white), 
               ),
               style: TextStyle(
-                  color: Colors.white), // Cor do texto ajustada para branco
+                  color: Colors.white), 
               onChanged: (val) {
                 user.password = val;
               },
@@ -199,7 +194,7 @@ class _LoginState extends State<Login> {
               child: const Text(
                 'Registrar Conta',
                 style: TextStyle(
-                    color: Colors.white), // Cor do texto ajustada para branco
+                    color: Colors.white), 
               ),
             ),
           ],

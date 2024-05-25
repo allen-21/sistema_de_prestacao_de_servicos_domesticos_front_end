@@ -11,7 +11,7 @@ class ListaPedidos extends StatelessWidget {
         title: const Text('Lista de Pedidos'),
       ),
       body: ListView.builder(
-        itemCount: 1, // Substitua pelo número real de pedidos
+        itemCount: 1, 
         itemBuilder: (context, index) {
           return ListTile(
             title: Text('Pedido ${index + 1}',
@@ -31,16 +31,7 @@ class ListaPedidos extends StatelessWidget {
         },
       ),
 
-      // onTap: () {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => TelaDetalhesPedido(index + 1),
-      //     ),
-      //   );
-      // },
     );
   }
-  // ),
-  // );
+
 }
