@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_perfil_cliente.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_profissao.dart';
 
 class ClientWelcomeScreen extends StatefulWidget {
   final String token;
@@ -18,7 +19,8 @@ class _ClientWelcomeScreenState extends State<ClientWelcomeScreen> {
   void initState() {
     super.initState();
     _screens = [
-      PerfilCliente (token:widget.token)
+      PerfilCliente (token:widget.token),
+      ProfissaoScreen()
 
     ];
   }
