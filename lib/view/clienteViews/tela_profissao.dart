@@ -7,8 +7,11 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/viewModel/profission
 
 
 class ProfissaoScreen extends StatelessWidget {
+  final String token;
   final ProfissaoViewModel viewModel = ProfissaoViewModel();
   final List<Profissoes> profissoes = Profissoes.values;
+
+  ProfissaoScreen({super.key, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ProfissaoScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfissaoListsScreen(profissao: profissao, profissionais: profissionais),
+                  builder: (context) => ProfissaoListsScreen(profissao: profissao, profissionais: profissionais, token: token,),
                 ),
               );
             },

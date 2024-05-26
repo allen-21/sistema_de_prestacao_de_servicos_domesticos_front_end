@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_lista_solicitacoes.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_perfil_cliente.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_profissao.dart';
 
@@ -20,7 +21,8 @@ class _ClientWelcomeScreenState extends State<ClientWelcomeScreen> {
     super.initState();
     _screens = [
       PerfilCliente (token:widget.token),
-      ProfissaoScreen()
+      ProfissaoScreen(token:widget.token),
+      ClienteListSolicitaco(token:widget.token)
 
     ];
   }

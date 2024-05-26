@@ -4,12 +4,11 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/models/profissional_
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/tela_services_profissional.dart';
 
 
-
 class ProfissaoListsScreen extends StatelessWidget {
   final Profissoes profissao;
   final List<Profissional> profissionais;
-
-  ProfissaoListsScreen({required this.profissao, required this.profissionais});
+ final String token;
+  ProfissaoListsScreen({required this.profissao, required this.profissionais, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +25,8 @@ class ProfissaoListsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfissionalDetailScreen(
-                    profissionalId: profissional.id!,
+                  builder: (context) => ServicosScreen(
+                    profissionalId: profissional.id!, token: token,
                   ),
                 ),
               );

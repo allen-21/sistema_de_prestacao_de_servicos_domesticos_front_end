@@ -3,13 +3,13 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/user_rol
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/user_model.dart';
 
 class Profissional extends UserModel {
-  int? id; // Adicione o campo id aqui
+  int? id; 
   Profissoes profissoes;
   String especialidades;
   bool disponibilidade;
 
   Profissional({
-    this.id, // Inclua o campo id no construtor
+    this.id, 
     String? nome,
     String? telefone,
     String? endereco,
@@ -29,7 +29,7 @@ class Profissional extends UserModel {
 
   factory Profissional.fromJson(Map<String, dynamic> json) {
     return Profissional(
-      id: json['id'], // Inclua o campo id na desserialização do JSON
+      id: json['id'],
       nome: json['nome'],
       telefone: json['telefone'],
       endereco: json['endereco'],
