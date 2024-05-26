@@ -88,26 +88,38 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
               flex: 1,
               child: TextFormField(
                 controller: _serviceDescriptionController,
-                maxLines: null, 
-                keyboardType: TextInputType.multiline, 
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(
                   labelText: 'Descrição do Serviço',
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 10.0), 
             ElevatedButton(
               onPressed: () {
                 _addService();
               },
-              child: const Text('Adicionar Serviço'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal, 
+                foregroundColor: Colors.white, 
+                padding: EdgeInsets.symmetric(vertical: 16), 
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add),
+                  const SizedBox(width: 8), 
+                  const Text('Adicionar Serviço'), 
+                ],
+              ),
             ),
             const SizedBox(height: 20.0),
             Expanded(
               flex: 2,
               child: _services.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: CircularProgressIndicator(),
                     )
                   : ListView.builder(

@@ -100,6 +100,8 @@ Future<void> _carregarInformacoesProfissional() async {
     return Scaffold(
       appBar: AppBar(
         title: Text('Atualizar Profissional'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -107,18 +109,68 @@ Future<void> _carregarInformacoesProfissional() async {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: () {
+                  // Adicione aqui a lógica para selecionar uma imagem
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[300],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 80,
+                        color: Colors.grey[600],
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.teal,
+                          ),
+                          child: Icon(Icons.camera_alt, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(
+                  labelText: 'Nome',
+                  prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(),
+                ),
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: telefoneController,
-                decoration: InputDecoration(labelText: 'Telefone'),
+                decoration: InputDecoration(
+                  labelText: 'Telefone',
+                  prefixIcon: Icon(Icons.phone),
+                  border: OutlineInputBorder(),
+                ),
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: enderecoController,
-                decoration: InputDecoration(labelText: 'Endereço'),
+                decoration: InputDecoration(
+                  labelText: 'Endereço',
+                  prefixIcon: Icon(Icons.location_on),
+                  border: OutlineInputBorder(),
+                ),
               ),
+              SizedBox(height: 16),
               DropdownButtonFormField<Profissoes>(
                 value: profissaoSelecionada,
                 onChanged: (value) {
@@ -132,19 +184,32 @@ Future<void> _carregarInformacoesProfissional() async {
                     child: Text(profissao.descricao),
                   );
                 }).toList(),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Profissão',
                   prefixIcon: Icon(Icons.work),
+                  border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: especialidadesController,
-                decoration: InputDecoration(labelText: 'Especialidades'),
+                decoration: InputDecoration(
+                  labelText: 'Especialidades',
+                  prefixIcon: Icon(Icons.star),
+                  border: OutlineInputBorder(),
+                ),
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: passwordController,
-                decoration: InputDecoration(labelText: 'Nova Senha'),
+                decoration: InputDecoration(
+                  labelText: 'Nova Senha',
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
               ),
+              SizedBox(height: 16),
               CheckboxListTile(
                 title: Text('Disponibilidade'),
                 value: disponibilidade,
@@ -153,13 +218,27 @@ Future<void> _carregarInformacoesProfissional() async {
                     disponibilidade = value!;
                   });
                 },
+                activeColor: Colors.teal,
               ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  _atualizarProfissional();
-                },
-                child: Text('Atualizar'),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    _atualizarProfissional();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  icon: Icon(Icons.update, color: Colors.white),
+                  label: Text(
+                    'Atualizar',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
               ),
             ],
           ),

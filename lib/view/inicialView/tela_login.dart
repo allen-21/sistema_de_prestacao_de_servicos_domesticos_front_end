@@ -24,59 +24,109 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 10, 71, 90),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Faça Login',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Colors.teal[300] ??
+          Colors.teal, // Usando operador ?? para fornecer um valor padrão
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.teal[300] ??
+                  Colors
+                      .teal, // Usando operador ?? para fornecer um valor padrão
+              Colors.teal[400] ??
+                  Colors
+                      .teal, // Usando operador ?? para fornecer um valor padrão
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Bem-vindo de volta!',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Usuário',
-                prefixIcon: Icon(Icons.person, color: Colors.white),
-              ),
-              style: TextStyle(color: Colors.white),
-              onChanged: (val) {
-                viewModel.user.username = val;
-              },
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Senha',
-                prefixIcon: Icon(Icons.lock, color: Colors.white),
-              ),
-              style: TextStyle(color: Colors.white),
-              onChanged: (val) {
-                viewModel.user.password = val;
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                viewModel.loginUser(context);
-              },
-              child: const Text('Entrar'),
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: goToRegister,
-              child: const Text(
-                'Registrar Conta',
+              const SizedBox(height: 30),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Usuário',
+                  prefixIcon: Icon(Icons.person_outline, color: Colors.white),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.1),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
                 style: TextStyle(color: Colors.white),
+                onChanged: (val) {
+                  viewModel.user.username = val;
+                },
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              TextFormField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Senha',
+                  prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.1),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                style: TextStyle(color: Colors.white),
+                onChanged: (val) {
+                  viewModel.user.password = val;
+                },
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton.icon(
+                onPressed: () {
+                  viewModel.loginUser(context);
+                },
+                icon: Icon(Icons.login),
+                label: Text('Entrar'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Não tem uma conta?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextButton(
+                    onPressed: goToRegister,
+                    child: Text(
+                      'Registrar Agora',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
