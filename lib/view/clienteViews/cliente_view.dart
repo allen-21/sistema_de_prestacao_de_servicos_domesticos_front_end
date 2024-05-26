@@ -38,7 +38,7 @@ class _ClientWelcomeScreenState extends State<ClientWelcomeScreen> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.teal,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -52,13 +52,9 @@ class _ClientWelcomeScreenState extends State<ClientWelcomeScreen> {
             icon: Icon(Icons.add),
             label: 'Adicionar Serviço',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Conversas',
-          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
