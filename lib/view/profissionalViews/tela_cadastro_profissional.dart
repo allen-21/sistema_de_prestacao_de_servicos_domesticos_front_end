@@ -1,99 +1,16 @@
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/profissoes.dart';
-import 'dart:convert';
-
-import 'package:sistema_de_prestacao_de_servicos_domesticos/models/profissional_model.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_login.dart';
-
+import 'package:sistema_de_prestacao_de_servicos_domesticos/viewModel/profissional/profissional_cadastro_view_model.dart';
 
 class TelaCadastroProfissional extends StatefulWidget {
   const TelaCadastroProfissional({super.key});
-
 
   @override
   _TelaCadastroProfissionalState createState() => _TelaCadastroProfissionalState();
 }
 
 class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
-  final _formKey = GlobalKey<FormState>();
-  Profissional profissional = Profissional(
-    nome: '',
-    telefone: '',
-    endereco: '',
-    username: '',
-    password: '',
-    profissoes: Profissoes.LIMPEZA,
-    especialidades: '',
-  );
-  String? errorMessage;
-
-  Future<void> save() async {
-    if (_formKey.currentState!.validate()) {
-      var profissionalJson = json.encode({
-        'nome': profissional.nome,
-        'telefone': profissional.telefone,
-        'endereco': profissional.endereco,
-        'username': profissional.username,
-        'password': profissional.password,
-        'profissoes': profissional.profissoes.toString().split('.').last,
-        'especialidades': profissional.especialidades,
-        'disponibilidade': profissional.disponibilidade,
-      });
-
-      var res = await http.post(
-        Uri.parse(ApiEndpoints.userRegisterProfissional),
-        headers: {'Content-Type': 'application/json'},
-        body: profissionalJson,
-      );
-
-      if (res.statusCode == 201) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Sucesso'),
-              content: Text('Registro bem-sucedido'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else if (res.statusCode == 400) {
-        var errorMessage = res.body;
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Erro de validação'),
-              content: Text(errorMessage),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        print('Erro ao registrar: ${res.body}');
-      }
-    }
-  }
+  final CadastroViewModel viewModel = CadastroViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +22,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
         child: Container(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formKey,
+            key: viewModel.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -122,7 +39,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.nome = val;
+                      viewModel.profissional.nome = val;
                     });
                   },
                 ),
@@ -140,7 +57,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.endereco = val;
+                      viewModel.profissional.endereco = val;
                     });
                   },
                 ),
@@ -159,7 +76,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.telefone = val;
+                      viewModel.profissional.telefone = val;
                     });
                   },
                 ),
@@ -177,7 +94,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.username = val;
+                      viewModel.profissional.username = val;
                     });
                   },
                 ),
@@ -196,16 +113,16 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.password = val;
+                      viewModel.profissional.password = val;
                     });
                   },
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<Profissoes>(
-                  value: profissional.profissoes,
+                  value: viewModel.profissional.profissoes,
                   onChanged: (value) {
                     setState(() {
-                      profissional.profissoes = value!;
+                      viewModel.profissional.profissoes = value!;
                     });
                   },
                   items: Profissoes.values.map((Profissoes profissao) {
@@ -233,13 +150,13 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      profissional.especialidades = val;
+                      viewModel.profissional.especialidades = val;
                     });
                   },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
-                  onPressed: save,
+                  onPressed: () => viewModel.save(context),
                   icon: const Icon(Icons.arrow_forward, color: Colors.white),
                   label: const Text(
                     'Cadastrar',
@@ -269,6 +186,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
+                    // handle terms of service
                   },
                   child: const Text(
                     'Termos de Serviço',
@@ -280,6 +198,7 @@ class _TelaCadastroProfissionalState extends State<TelaCadastroProfissional> {
                 ),
                 TextButton(
                   onPressed: () {
+                    // handle privacy policy
                   },
                   child: const Text(
                     'Política de Privacidade',

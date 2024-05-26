@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
+
 class AddAndListServicesScreen extends StatefulWidget {
   final String token;
 
@@ -15,12 +17,6 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
   TextEditingController _serviceDescriptionController = TextEditingController();
   List<String> _services = [];
 
-  String addServiceUrl = "http://192.168.39.91:8080/servicos/adicionar";
-  String listServiceUrl = "http://192.168.39.91:8080/servicos/meus";
-
-
-  
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +26,7 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
   Future<void> _fetchServices() async {
     try {
       var response = await http.get(
-        Uri.parse(listServiceUrl),
+        Uri.parse(ApiEndpoints.serviceMeus),
         headers: {
           'Authorization': 'Bearer ${widget.token}',
         },
@@ -55,7 +51,7 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
 
     try {
       var response = await http.post(
-        Uri.parse(addServiceUrl),
+        Uri.parse(ApiEndpoints.serviceAdcionar),
         headers: {
           'Authorization': 'Bearer ${widget.token}',
           'Content-Type': 'application/json',

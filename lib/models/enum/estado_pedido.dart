@@ -1,0 +1,1 @@
+enum EstadoPedido { PENDENTE, FEITO }

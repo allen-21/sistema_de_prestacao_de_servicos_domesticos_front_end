@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_points.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/clientemodel.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_login.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/inicialView/tela_login.dart';
 
 class CadastroClienteViewModel extends ChangeNotifier {
   Cliente cliente = Cliente(nome: '', telefone: '', endereco: '', username: '', password: '');

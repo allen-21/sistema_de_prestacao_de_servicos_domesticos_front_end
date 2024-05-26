@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -7,33 +5,22 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_point
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/user.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/adminviews/admin_view.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/clienteViews/cliente_view.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/incialView/tela_cadastro.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_inicial_profissional.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginViewModel extends ChangeNotifier {
+  late User user = User("", "");
 
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  User user = User("", "");
-
-  Future<void> save() async {
+  Future<void> loginUser(BuildContext context) async {
     try {
       var res = await http.post(
         Uri.parse(ApiEndpoints.loginUrl),
         headers: {'Content-Type': 'application/json'},
-        body:
-            json.encode({'username': user.username, 'password': user.password}),
+        body: json.encode({'username': user.username, 'password': user.password}),
       );
       print(res.body);
       if (res.statusCode == 200) {
         var token = json.decode(res.body)['token'];
 
-      
         var userInfoRes = await http.get(
           Uri.parse(ApiEndpoints.userInfoRoleUrl),
           headers: {'Authorization': 'Bearer $token'},
@@ -42,7 +29,6 @@ class _LoginState extends State<Login> {
         if (userInfoRes.statusCode == 200) {
           var role = json.decode(userInfoRes.body)['role'];
 
-         
           switch (role) {
             case 'ROLE_ADMIN':
               Navigator.push(
@@ -72,7 +58,6 @@ class _LoginState extends State<Login> {
               break;
           }
         } else {
-          
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -111,7 +96,6 @@ class _LoginState extends State<Login> {
         );
       }
     } catch (error) {
-     
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -130,77 +114,5 @@ class _LoginState extends State<Login> {
         },
       );
     }
-  }
-
-  void goToRegister() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const TelaCadastro()),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 10, 71, 90), 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Faça Login',
-              style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255)), 
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Usuário',
-                prefixIcon: Icon(Icons.person,
-                    color: Colors.white), 
-              ),
-              style: TextStyle(
-                  color: Colors.white), 
-              onChanged: (val) {
-                user.username = val;
-              },
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Senha',
-                prefixIcon: Icon(Icons.lock,
-                    color: Colors.white), 
-              ),
-              style: TextStyle(
-                  color: Colors.white), 
-              onChanged: (val) {
-                user.password = val;
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                save();
-              },
-              child: const Text('Entrar'),
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: goToRegister,
-              child: const Text(
-                'Registrar Conta',
-                style: TextStyle(
-                    color: Colors.white), 
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

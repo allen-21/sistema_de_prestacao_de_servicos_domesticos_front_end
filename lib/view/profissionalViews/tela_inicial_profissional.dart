@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_conversa.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_lista_pedidos.dart';
-import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_lista_servicos.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_adcionar_listar_servicos.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_perfil_profissional.dart';
 
 class ProfissionalMenu extends StatefulWidget {
@@ -21,9 +20,8 @@ class _ProfissionalMenuState extends State<ProfissionalMenu> {
     super.initState();
     _screens = [
       PerfilProfissional(token: widget.token),
-      ListaPedidos(),
+      PedidosProfissionalScreen(token: widget.token),
       AddAndListServicesScreen(token: widget.token),
-      TelaConversa(),
     ];
   }
 
@@ -38,7 +36,7 @@ class _ProfissionalMenuState extends State<ProfissionalMenu> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xFF075E54),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -52,14 +50,10 @@ class _ProfissionalMenuState extends State<ProfissionalMenu> {
             icon: Icon(Icons.add),
             label: 'Adicionar Serviço',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Conversas',
-          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
     );

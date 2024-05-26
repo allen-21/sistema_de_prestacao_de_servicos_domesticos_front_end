@@ -29,7 +29,7 @@ class Cliente extends UserModel {
   @override
   Map<String, dynamic> toJson() {
     final data = super.toJson();
-    data['role'] = 'CLIENTE'; // Override role to ensure it is always CLIENTE
+    data['role'] = 'CLIENTE'; 
     return data;
   }
 }
