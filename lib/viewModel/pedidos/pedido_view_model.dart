@@ -5,12 +5,14 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/models/enum/estado_p
 import 'dart:convert';
 
 import 'package:sistema_de_prestacao_de_servicos_domesticos/models/pedido.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/models/pedido_profissionaldto.dart';
 
-// Importando o arquivo com os endpoints
+
 
 class PedidoViewModel extends ChangeNotifier {
   final String token;
   List<Pedido> pedidos = [];
+  List<PedidoProfissionalDTO> solicitacoes = []; 
 
   PedidoViewModel({required this.token});
 
@@ -24,6 +26,25 @@ class PedidoViewModel extends ChangeNotifier {
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
         pedidos = data.map((json) => Pedido.fromJson(json)).toList();
+        notifyListeners();
+      } else {
+        throw Exception('Falha ao carregar pedidos');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> listarSolicitacoes() async {
+    try {
+      final response = await http.get(
+        Uri.parse(ApiEndpoints.pedidoListarCliente), 
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+        solicitacoes = data.map((json) => PedidoProfissionalDTO.fromJson(json)).toList(); 
         notifyListeners();
       } else {
         throw Exception('Falha ao carregar pedidos');
@@ -54,4 +75,3 @@ class PedidoViewModel extends ChangeNotifier {
     }
   }
 }
-
