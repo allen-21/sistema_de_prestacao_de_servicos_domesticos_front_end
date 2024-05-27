@@ -45,12 +45,12 @@ class _ClientWelcomeScreenState extends State<ClientWelcomeScreen> {
             label: 'Perfil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Lista de Pedidos',
+            icon: Icon(Icons.work),
+            label: 'Lista de Profissões',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Adicionar Serviço',
+            icon: Icon(Icons.list_alt),
+            label: 'Pedidios',
           ),
         ],
         currentIndex: _selectedIndex,
