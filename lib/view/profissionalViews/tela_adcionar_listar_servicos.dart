@@ -7,10 +7,12 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/config/api_end_point
 class AddAndListServicesScreen extends StatefulWidget {
   final String token;
 
-  const AddAndListServicesScreen({Key? key, required this.token}) : super(key: key);
+  const AddAndListServicesScreen({Key? key, required this.token})
+      : super(key: key);
 
   @override
-  _AddAndListServicesScreenState createState() => _AddAndListServicesScreenState();
+  _AddAndListServicesScreenState createState() =>
+      _AddAndListServicesScreenState();
 }
 
 class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
@@ -34,7 +36,8 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<String> descriptions = data.map((item) => item['descricaoDoServico'] as String).toList();
+        List<String> descriptions =
+            data.map((item) => item['descricaoDoServico'] as String).toList();
         setState(() {
           _services = descriptions;
         });
@@ -96,22 +99,22 @@ class _AddAndListServicesScreenState extends State<AddAndListServicesScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10.0), 
+            const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
                 _addService();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal, 
-                foregroundColor: Colors.white, 
-                padding: EdgeInsets.symmetric(vertical: 16), 
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 16),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.add),
-                  const SizedBox(width: 8), 
-                  const Text('Adicionar Serviço'), 
+                  const SizedBox(width: 8),
+                  const Text('Adicionar Serviço'),
                 ],
               ),
             ),

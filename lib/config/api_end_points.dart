@@ -53,4 +53,9 @@ static String pedidoAtualizarEstado(int id) {
   static String pedidoAvaliacaoPedido(int id) {
     return "${ConfigHost.baseUrl}/pedidos/avaliacao/$id";
   } 
+  //Avalicao
+   static String solicitacaoAvaliar = "${ConfigHost.baseUrl}/avaliacoes/avaliar";
+     static String listaDeAvaliacao(int id) {
+    return "${ConfigHost.baseUrl}/avaliacoes/servicos/$id";
+  } 
 }

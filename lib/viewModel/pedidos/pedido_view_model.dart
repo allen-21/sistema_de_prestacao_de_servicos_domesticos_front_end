@@ -54,6 +54,32 @@ class PedidoViewModel extends ChangeNotifier {
     }
   }
 
+     Future<void> avaliarSolicitacao(int pedidoId, int nota, String comentario) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiEndpoints.solicitacaoAvaliar), 
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode({
+          'pedidoId': pedidoId,
+          'nota': nota,
+          'comentario': comentario,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+
+        listarSolicitacoes(); 
+      } else {
+        throw Exception('Falha ao avaliar a solicitação');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future<void> alterarEstadoPedido(int pedidoId, EstadoPedido novoEstado) async {
     try {
       final response = await http.put(
