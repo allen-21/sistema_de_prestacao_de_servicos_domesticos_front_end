@@ -28,48 +28,71 @@ class _ServicosScreenState extends State<ServicosScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Serviços do Profissional'),
-      ),
-      body: FutureBuilder<List<Servico>>(
-        future: Provider.of<ServicosViewModel>(context, listen: false)
-            .listarServicosDoProfissional(widget.profissionalId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Erro ao carregar serviços'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('Nenhum serviço encontrado'));
-          } else {
-            final servicos = snapshot.data!;
-            return ListView.builder(
-              itemCount: servicos.length,
-              itemBuilder: (context, index) {
-                final servico = servicos[index];
-                return Card(
-                  margin: EdgeInsets.all(10),
-                  child: ListTile(
-                    title: Text(servico.descricaoDoServico),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        _mostrarDialogoEnvioPedido(
-                            context, servico.id, widget.token);
-                      },
-                      child: Text('Solicitar'),
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Serviços do Profissional'),
+    ),
+    body: FutureBuilder<List<Servico>>(
+      future: Provider.of<ServicosViewModel>(context, listen: false)
+          .listarServicosDoProfissional(widget.profissionalId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Erro ao carregar serviços'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('Nenhum serviço encontrado'));
+        } else {
+          final servicos = snapshot.data!;
+          return ListView.builder(
+            itemCount: servicos.length,
+            itemBuilder: (context, index) {
+              final servico = servicos[index];
+              return Card(
+                margin: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      title: Text(
+                        servico.descricaoDoServico,
+                        textAlign: TextAlign.justify,
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
-  }
+                    SizedBox(height: 10),
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          _mostrarDialogoEnvioPedido(
+                              context, servico.id, widget.token);
+                        },
+                        icon: Icon(Icons.playlist_add),
+                        label: Text('Solicitar'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+      },
+    ),
+  );
+}
+
+
+
+
+
+
+
 
   void _mostrarDialogoEnvioPedido(
       BuildContext context, int servicoId, String token) {
