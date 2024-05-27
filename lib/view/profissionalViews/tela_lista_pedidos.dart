@@ -29,88 +29,78 @@ class PedidosProfissionalScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final pedido = viewModel.pedidos[index];
 
-                return Center(
-                  // Adiciona um padding de 16.0 à esquerda
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                return Card(
+                  elevation: 4,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(16),
+                    title: Text(
+                      pedido.descricao.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    color: pedido.status.index == 0
-                        ? Colors.red[800]
-                        : Colors.blue[800],
-                    child: Column(
+                    subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 16.0), // Espaçamento à esquerda do texto
-                          child: ListTile(
-                            title: Text(
-                              pedido.descricao.toUpperCase(),
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 8.0),
-                                Text(
-                                  'Cliente: ${pedido.cliente.nome}',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(height: 8.0),
-                                Text(
-                                  'Telefone: ${pedido.cliente.telefone}',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(height: 8.0),
-                                Text(
-                                  'Status: ${pedido.status.index == 0 ? "Pendente" : "Feito"}',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(height: 10.0),
-                              ],
-                            ),
-                            trailing: DropdownButton<EstadoPedido>(
-                              value: pedido.status,
-                              style: TextStyle(
-                                  backgroundColor: Colors.white,
-                                  fontSize: 20.0,
-                                  color: Colors.black),
-                              onChanged: (EstadoPedido? novoEstado) {
-                                if (novoEstado != null) {
-                                  viewModel.alterarEstadoPedido(
-                                      pedido.id, novoEstado);
-                                }
-                              },
-                              items: EstadoPedido.values
-                                  .map((EstadoPedido estado) {
-                                return DropdownMenuItem<EstadoPedido>(
-                                  value: estado,
-                                  child:
-                                      Text(estado.toString().split('.').last),
-                                );
-                              }).toList(),
-                              // style: TextStyle(
-                              //     color: Colors.black,
-                              //     fontSize: 16,
-                              //     backgroundColor: Colors.white),
-                            ),
-                          ),
+                      children: [
+                        SizedBox(height: 8),
+                        Text(
+                          'Cliente: ${pedido.cliente.nome}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'Telefone: ${pedido.cliente.telefone}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'Status: ${pedido.status.index == 0 ? "Pendente" : "Feito"}',
+                          style: TextStyle(fontSize: 16),
                         ),
                       ],
+                    ),
+                    trailing: DropdownButton<EstadoPedido>(
+                      value: pedido.status,
+                      onChanged: (EstadoPedido? novoEstado) {
+                        if (novoEstado != null) {
+                          viewModel.alterarEstadoPedido(pedido.id, novoEstado);
+                        }
+                      },
+                      items: EstadoPedido.values.map((EstadoPedido estado) {
+                        Color? cor;
+                        if (estado == EstadoPedido.PENDENTE) {
+                          cor = Colors.red;
+                        } else {
+                          cor = Colors.green;
+                        }
+                        return DropdownMenuItem<EstadoPedido>(
+                          value: estado,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: cor,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              estado.toString().split('.').last,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      underline: Container(),
                     ),
                   ),
                 );
