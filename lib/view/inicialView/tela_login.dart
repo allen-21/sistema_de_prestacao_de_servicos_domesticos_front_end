@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/inicialView/tela_cadastro.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/viewModel/login/login_view_model.dart';
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -13,6 +12,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   late LoginViewModel viewModel = LoginViewModel();
+  
+ 
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void goToRegister() {
     Navigator.push(
@@ -21,11 +24,28 @@ class _LoginState extends State<Login> {
     );
   }
 
+  void _login() {
+   
+    viewModel.loginUser(context);
+
+    
+    _usernameController.clear();
+    _passwordController.clear();
+  }
+
+  @override
+  void dispose() {
+    
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[300] ??
-          Colors.teal, // Usando operador ?? para fornecer um valor padrão
+          Colors.teal, 
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -34,10 +54,10 @@ class _LoginState extends State<Login> {
             colors: [
               Colors.teal[300] ??
                   Colors
-                      .teal, // Usando operador ?? para fornecer um valor padrão
+                      .teal, 
               Colors.teal[400] ??
                   Colors
-                      .teal, // Usando operador ?? para fornecer um valor padrão
+                      .teal, 
             ],
           ),
         ),
@@ -58,6 +78,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 30),
               TextFormField(
+                controller: _usernameController,
                 decoration: InputDecoration(
                   hintText: 'Usuário',
                   prefixIcon: Icon(Icons.person_outline, color: Colors.white),
@@ -75,6 +96,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Senha',
@@ -93,9 +115,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 30),
               ElevatedButton.icon(
-                onPressed: () {
-                  viewModel.loginUser(context);
-                },
+                onPressed: _login,
                 icon: Icon(Icons.login),
                 label: Text('Entrar'),
                 style: ElevatedButton.styleFrom(
