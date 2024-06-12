@@ -10,6 +10,8 @@ import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalVie
 class LoginViewModel extends ChangeNotifier {
   late User user = User("", "");
 
+  
+
   Future<void> loginUser(BuildContext context) async {
     try {
       var res = await http.post(

@@ -53,7 +53,6 @@ class PedidoViewModel extends ChangeNotifier {
       print(e.toString());
     }
   }
-
      Future<void> avaliarSolicitacao(int pedidoId, int nota, String comentario) async {
     try {
       final response = await http.post(

@@ -11,6 +11,9 @@ class ApiEndpoints {
   static String userDetalhesProfissional = "${ConfigHost.baseUrl}/profissional/detalhes";
   static String userDisponibilidadeProfissional = "${ConfigHost.baseUrl}/profissional/disponibilidade";
 
+ static String listarProfissionaisPorTermo(String termo) {
+    return "${ConfigHost.baseUrl}/profissional/buscar/$termo"; 
+  }
   static String listarProfissionaisPorProfissao(String profissao) {
     return "${ConfigHost.baseUrl}/profissional/profissao/$profissao";
 
@@ -45,6 +48,7 @@ class ApiEndpoints {
  static String pedidoEnviar = "${ConfigHost.baseUrl}/pedidos/enviar";
  static String pedidoListarProfissional = "${ConfigHost.baseUrl}/pedidos/profissional";
  static String pedidoListarCliente = "${ConfigHost.baseUrl}/pedidos/cliente";
+ static String pedidoListarNaoAvaliados = "${ConfigHost.baseUrl}/pedidos/naoavaliados";
 
 static String pedidoAtualizarEstado(int id) {
     return "${ConfigHost.baseUrl}/pedidos/status/$id";
@@ -55,6 +59,7 @@ static String pedidoAtualizarEstado(int id) {
   } 
   //Avalicao
    static String solicitacaoAvaliar = "${ConfigHost.baseUrl}/avaliacoes/avaliar";
+   
      static String listaDeAvaliacao(int id) {
     return "${ConfigHost.baseUrl}/avaliacoes/servicos/$id";
   } 

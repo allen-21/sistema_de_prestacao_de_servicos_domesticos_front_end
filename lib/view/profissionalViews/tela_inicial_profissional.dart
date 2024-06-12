@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/bem_vindo.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_lista_pedidos.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_adcionar_listar_servicos.dart';
 import 'package:sistema_de_prestacao_de_servicos_domesticos/view/profissionalViews/tela_perfil_profissional.dart';
@@ -19,9 +20,10 @@ class _ProfissionalMenuState extends State<ProfissionalMenu> {
   void initState() {
     super.initState();
     _screens = [
+      WelcomePage(),
       PerfilProfissional(token: widget.token),
       PedidosProfissionalScreen(token: widget.token),
-      AddAndListServicesScreen(token: widget.token),
+    //  AddAndListServicesScreen(token: widget.token),
     ];
   }
 

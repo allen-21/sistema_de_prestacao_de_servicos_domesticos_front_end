@@ -24,5 +24,21 @@ class ProfissaoViewModel extends ChangeNotifier {
       throw Exception('Falha ao carregar profissionais por profissão');
     }
   }
+
+
+ Future<List<Profissional>> listarProfissionaisPorTermo(String termo) async {
+    final url = ApiEndpoints.listarProfissionaisPorTermo(termo);
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+
+      List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Profissional.fromJson(json)).toList();
+    } else {
+
+      throw Exception('Falha ao carregar profissionais');
+    }
+  }
 }
+
+
 

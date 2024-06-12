@@ -9,6 +9,8 @@ class ClienteListSolicitaco extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController notaController = TextEditingController();
+
     return ChangeNotifierProvider(
       create: (_) => PedidoViewModel(token: token)..listarSolicitacoes(),
       child: Scaffold(
@@ -49,10 +51,21 @@ class ClienteListSolicitaco extends StatelessWidget {
                               children: [
                                 Text('Avalie o serviço prestado:'),
                                 TextField(
+                                  controller: notaController,
                                   decoration: InputDecoration(labelText: 'Nota (0-5)'),
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
-                                    // Implemente a lógica para validar a nota, se necessário
+                                    if (value.isNotEmpty) {
+                                      int nota = int.parse(value);
+                                      if (nota < 0 || nota > 5) {
+                                        notaController.clear();
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Por favor, insira uma nota entre 0 e 5.'),
+                                          ),
+                                        );
+                                      }
+                                    }
                                   },
                                 ),
                                 TextField(
@@ -73,7 +86,7 @@ class ClienteListSolicitaco extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () {
                                   // Adicione a lógica para avaliar o pedido
-                                  int nota = 4; // Exemplo de nota
+                                  int nota = int.parse(notaController.text); // Obtém a nota do controller
                                   String comentario = 'Ótimo serviço!'; // Exemplo de comentário
                                   viewModel.avaliarSolicitacao(pedidoId, nota, comentario);
                                   Navigator.of(context).pop();
@@ -96,3 +109,4 @@ class ClienteListSolicitaco extends StatelessWidget {
     );
   }
 }
+

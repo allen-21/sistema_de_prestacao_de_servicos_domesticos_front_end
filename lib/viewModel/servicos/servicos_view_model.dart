@@ -20,32 +20,35 @@ class ServicosViewModel extends ChangeNotifier {
   }
 
   //Pedido
-  Future<String> enviarPedido({
-    required String token,
-    required int servicoId,
-    required String descricao,
-  }) async {
-    final Map<String, dynamic> requestBody = {
-      'servicoId': servicoId,
-      'descricao': descricao,
-      'status': 'PENDENTE', 
-    };
+Future<String> enviarPedido({
+  required String token,
+  required int servicoId,
+  required String descricao,
+  required String dataHora,
+}) async {
+  final Map<String, dynamic> requestBody = {
+    'servicoId': servicoId,
+    'descricao': descricao,
+    'status': 'PENDENTE',
+    'dataHora': dataHora,
+  };
 
-    final response = await http.post(
-      Uri.parse(ApiEndpoints.pedidoEnviar),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(requestBody),
-    );
+  final response = await http.post(
+    Uri.parse(ApiEndpoints.pedidoEnviar),
+    headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    },
+    body: json.encode(requestBody),
+  );
 
-    if (response.statusCode == 200) {
-      return 'Pedido realizado com sucesso!';
-    } else if (response.statusCode == 401) {
-      throw Exception('Erro: Operação não autorizada.');
-    } else {
-      throw Exception('Erro ao realizar pedido.');
-    }
+  if (response.statusCode == 200) {
+    return 'Pedido realizado com sucesso!';
+  } else if (response.statusCode == 401) {
+    throw Exception('Erro: Operação não autorizada.');
+  } else {
+    throw Exception('Erro ao realizar pedido.');
   }
+}
+
 }
